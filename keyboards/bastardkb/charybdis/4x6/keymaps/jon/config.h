@@ -16,6 +16,8 @@
  */
 #pragma once
 
+#define CHARYBDIS_DRAGSCROLL_REVERSE_Y
+
 #ifdef VIA_ENABLE
 /* VIA configuration. */
 #    define DYNAMIC_KEYMAP_LAYER_COUNT 4
