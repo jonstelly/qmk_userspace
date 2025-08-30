@@ -75,10 +75,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, KC_MPLY, KC_MPRV, KC_VOLD, KC_MNXT,  KC_END,    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_PPLS, KC_PMNS, KC_PAST, KC_PSLS, XXXXXXX, XXXXXXX,
+       DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_PPLS, KC_PMNS, KC_PAST, KC_PSLS, XXXXXXX, XXXXXXX,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                  _______, _______, _______,    _______, _______,
-                                       DRGSCRL, KC_MS_WH_UP,    KC_MS_WH_DOWN
+                                  _______, _______, _______,      KC_MS_WH_UP, _______,
+                                           DRGSCRL, _______,    KC_MS_WH_DOWN
   //                            ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -103,12 +103,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     bool isBase = layer_state_cmp(default_layer_state, LAYER_BASE);
     bool isGame = layer_state_cmp(default_layer_state, LAYER_GAME);
-    bool isMod = layer_state_cmp(layer_state, LAYER_MOD);
+    //bool isMod = layer_state_cmp(layer_state, LAYER_MOD);
 
     uint8_t intensity = 0xC0;
     
     uint8_t red = isGame ? intensity : 0x00;
-    uint8_t green = isMod ? intensity : 0x00;
+    //uint8_t green = isMod ? intensity : 0x00;
+    uint8_t green = 0x00;
     uint8_t blue = isBase ? intensity : 0x00;
 
     rgb_matrix_set_color_all(red, green, blue);
