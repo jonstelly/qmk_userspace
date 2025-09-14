@@ -22,13 +22,16 @@
 
 enum charybdis_keymap_layers {
     LAYER_BASE = 0,
-    LAYER_MOD,
+    LAYER_BASE_MOD,
     LAYER_GAME,
+    LAYER_GAME_MOD
 };
 
-#define MO_Z LT(LAYER_MOD, KC_Z)
-#define MO_SLSH LT(LAYER_MOD, KC_SLSH)
-#define MO_BTN1 LT(LAYER_MOD, KC_BTN1)
+#define BO_Z LT(LAYER_BASE_MOD, KC_Z)
+#define BO_SLSH LT(LAYER_BASE_MOD, KC_SLSH)
+
+#define GO_Z LT(LAYER_GAME_MOD, KC_Z)
+#define GO_SLSH LT(LAYER_GAME_MOD, KC_SLSH)
 
 #define DF_GAME DF(LAYER_GAME)
 #define DF_BASE DF(LAYER_BASE)
@@ -50,6 +53,15 @@ enum charybdis_keymap_layers {
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
+#define MOD_LAYER LAYOUT( \
+       KC_TILD,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,      KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, KC_PEQL, \
+       XXXXXXX,  KC_F11,  KC_F12, KC_VOLU, KC_MUTE, KC_HOME,    KC_PGUP, XXXXXXX,   KC_UP, KC_LBRC, KC_RBRC, XXXXXXX, \
+       XXXXXXX, KC_MPLY, KC_MPRV, KC_VOLD, KC_MNXT,  KC_END,    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, \
+       DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_PPLS, KC_PMNS, KC_PAST, KC_PSLS, XXXXXXX, XXXXXXX, \
+                                  _______, _______, _______,      KC_MS_WH_UP, _______, \
+                                           DRGSCRL, _______,    KC_MS_WH_DOWN \
+  )
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
@@ -60,27 +72,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_LSFT,    HR_A,    HR_S,    HR_D,    HR_F,    KC_G,       KC_H,    HR_J,    HR_K,    HR_L, HR_SCLN, KC_QUOT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       KC_LCTL,    MO_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, MO_SLSH, KC_LALT,
+       KC_LCTL,    BO_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, BO_SLSH, KC_LALT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                                    DF_GAME, KC_SPC, KC_BTN1,    KC_BSPC,  KC_ENT,
                                            KC_LALT, KC_BTN2,     KC_DEL
   //                            ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
-  [LAYER_MOD] = LAYOUT(
-  // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       KC_TILD,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,      KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, KC_PEQL,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX,  KC_F11,  KC_F12, KC_VOLU, KC_MUTE, KC_HOME,    KC_PGUP, XXXXXXX,   KC_UP, KC_LBRC, KC_RBRC, XXXXXXX,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX, KC_MPLY, KC_MPRV, KC_VOLD, KC_MNXT,  KC_END,    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_PPLS, KC_PMNS, KC_PAST, KC_PSLS, XXXXXXX, XXXXXXX,
-  // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                  _______, _______, _______,      KC_MS_WH_UP, _______,
-                                           DRGSCRL, _______,    KC_MS_WH_DOWN
-  //                            ╰───────────────────────────╯ ╰──────────────────╯
-  ),
+  [LAYER_BASE_MOD] = MOD_LAYER,
 
   [LAYER_GAME] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
@@ -90,12 +89,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       KC_LCTL,    MO_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, MO_SLSH, KC_LALT,
+       KC_LCTL,    GO_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, GO_SLSH, KC_LALT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                   DF_BASE, KC_SPC, MO_BTN1,    KC_BSPC,  KC_ENT,
+                                   DF_BASE, KC_SPC, KC_BTN1,    KC_BSPC,  KC_ENT,
                                            KC_LALT, KC_BTN2,     KC_DEL
   //                            ╰───────────────────────────╯ ╰──────────────────╯
-  )
+  ),
+
+  [LAYER_GAME_MOD] = MOD_LAYER
 };
 // clang-format on
 
@@ -103,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     bool isBase = layer_state_cmp(default_layer_state, LAYER_BASE);
     bool isGame = layer_state_cmp(default_layer_state, LAYER_GAME);
-    //bool isMod = layer_state_cmp(layer_state, LAYER_MOD);
+    //bool isMod = layer_state_cmp(layer_state, LAYER_BASE_MOD);
 
     uint8_t intensity = 0xC0;
     
